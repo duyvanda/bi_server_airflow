@@ -1,0 +1,20 @@
+--- 
+services: 
+  webserver: 
+    image: ubuntu:airflow_stack
+    healthcheck: 
+      interval: 30s
+      retries: 3
+      test: 
+        - CMD-SHELL
+        - "[ -f /usr/local/airflow/airflow-webserver.pid ]"
+      timeout: 30s
+    ports: 
+      - "8080:8080"
+    container_name: myairflow
+    volumes: 
+      - "./dags:/usr/local/airflow/dags"
+      - "./plugins:/usr/local/airflow/plugins"
+      - "./data:/usr/local/airflow/data"
+      # - "./config/airflow.cfg:/usr/local/airflow/airflow.cfg" 
+version: "3.7"
